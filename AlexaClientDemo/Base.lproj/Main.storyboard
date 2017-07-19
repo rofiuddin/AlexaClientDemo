@@ -10,7 +10,7 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--First-->
+        <!--Second-->
         <scene sceneID="hNz-n2-bh7">
             <objects>
                 <viewController id="9pv-A4-QxB" customClass="FirstViewController" customModule="AlexaClientDemo" customModuleProvider="target" sceneMemberID="viewController">
@@ -22,15 +22,15 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" text="Alexa Voice Recorder" textAlignment="center" lineBreakMode="tailTruncation" minimumFontSize="10" translatesAutoresizingMaskIntoConstraints="NO" id="KQZ-1w-vlD">
-                                <rect key="frame" x="15" y="325" width="347" height="42"/>
-                                <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" text="Alexa Voice Assistant" textAlignment="center" lineBreakMode="tailTruncation" minimumFontSize="10" translatesAutoresizingMaskIntoConstraints="NO" id="KQZ-1w-vlD">
+                                <rect key="frame" x="15" y="325" width="343" height="42"/>
+                                <color key="backgroundColor" red="0.32998142619999998" green="0.53725490200000003" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <fontDescription key="fontDescription" name="Helvetica" family="Helvetica" pointSize="36"/>
                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Tap to start recording" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="A5M-7J-77L">
-                                <rect key="frame" x="119" y="375" width="140" height="17"/>
+                                <rect key="frame" x="117" y="375" width="140" height="17"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <nil key="highlightedColor"/>
@@ -38,30 +38,37 @@
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="r6H-Uk-bu3">
                                 <rect key="frame" x="166" y="408" width="43" height="25"/>
                                 <constraints>
-                                    <constraint firstAttribute="width" constant="43" id="nl6-Vv-El5"/>
+                                    <constraint firstAttribute="width" constant="43" id="Z2b-JX-f6K"/>
                                 </constraints>
                                 <state key="normal" image="microphone">
                                     <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 </state>
+                                <connections>
+                                    <action selector="record:" destination="9pv-A4-QxB" eventType="touchUpInside" id="Ezm-g3-e3Y"/>
+                                </connections>
                             </button>
                         </subviews>
-                        <color key="backgroundColor" red="0.32903754922067285" green="0.53779958741073663" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <color key="backgroundColor" red="0.32998142616421572" green="0.53725490196078429" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
-                            <constraint firstItem="r6H-Uk-bu3" firstAttribute="top" secondItem="A5M-7J-77L" secondAttribute="bottom" constant="16" id="2B3-2g-4BJ"/>
-                            <constraint firstItem="KQZ-1w-vlD" firstAttribute="leading" secondItem="tsR-hK-woN" secondAttribute="leadingMargin" constant="-1" id="86Z-N6-FHW"/>
-                            <constraint firstItem="4ug-Mw-9AY" firstAttribute="top" secondItem="r6H-Uk-bu3" secondAttribute="bottom" constant="185" id="nRu-AD-Wnx"/>
-                            <constraint firstItem="r6H-Uk-bu3" firstAttribute="centerX" secondItem="tsR-hK-woN" secondAttribute="centerX" id="rNj-cQ-Q5O"/>
-                            <constraint firstItem="KQZ-1w-vlD" firstAttribute="centerX" secondItem="A5M-7J-77L" secondAttribute="centerX" id="tLY-CC-DWT"/>
-                            <constraint firstItem="A5M-7J-77L" firstAttribute="top" secondItem="KQZ-1w-vlD" secondAttribute="bottom" constant="8" symbolic="YES" id="z7m-hQ-Mbe"/>
+                            <constraint firstItem="A5M-7J-77L" firstAttribute="top" secondItem="KQZ-1w-vlD" secondAttribute="bottom" constant="8" symbolic="YES" id="2F1-ix-RKN"/>
+                            <constraint firstItem="KQZ-1w-vlD" firstAttribute="leading" secondItem="tsR-hK-woN" secondAttribute="leadingMargin" constant="-1" id="6yd-oc-li4"/>
+                            <constraint firstItem="r6H-Uk-bu3" firstAttribute="top" secondItem="A5M-7J-77L" secondAttribute="bottom" constant="16" id="D1E-bV-aE8"/>
+                            <constraint firstItem="4ug-Mw-9AY" firstAttribute="top" secondItem="r6H-Uk-bu3" secondAttribute="bottom" constant="185" id="H5b-dh-t4Y"/>
+                            <constraint firstItem="KQZ-1w-vlD" firstAttribute="centerX" secondItem="A5M-7J-77L" secondAttribute="centerX" id="Rl4-BW-jG5"/>
+                            <constraint firstItem="r6H-Uk-bu3" firstAttribute="centerX" secondItem="tsR-hK-woN" secondAttribute="centerX" id="uwH-9x-dtO"/>
                         </constraints>
                     </view>
-                    <tabBarItem key="tabBarItem" title="First" image="first" id="acW-dT-cKf"/>
+                    <tabBarItem key="tabBarItem" title="Second" image="second" id="acW-dT-cKf"/>
+                    <connections>
+                        <outlet property="recordButton" destination="r6H-Uk-bu3" id="bvT-XS-Ohc"/>
+                        <outlet property="statusText" destination="A5M-7J-77L" id="WfL-Ew-ByU"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="W5J-7L-Pyd" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="749.60000000000002" y="-320.68965517241384"/>
         </scene>
-        <!--Second-->
+        <!--First-->
         <scene sceneID="wg7-f3-ORb">
             <objects>
                 <viewController id="8rJ-Kc-sve" customClass="SecondViewController" customModule="AlexaClientDemo" customModuleProvider="target" sceneMemberID="viewController">
@@ -95,7 +102,7 @@
                             <constraint firstAttribute="centerY" secondItem="zEq-FU-wV5" secondAttribute="centerY" id="qzY-Ky-pLD"/>
                         </constraints>
                     </view>
-                    <tabBarItem key="tabBarItem" title="Second" image="second" id="cPa-gy-q4n"/>
+                    <tabBarItem key="tabBarItem" title="First" image="first" id="cPa-gy-q4n"/>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="4Nw-L8-lE0" sceneMemberID="firstResponder"/>
             </objects>
@@ -112,8 +119,8 @@
                         <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
                     </tabBar>
                     <connections>
-                        <segue destination="9pv-A4-QxB" kind="relationship" relationship="viewControllers" id="u7Y-xg-7CH"/>
                         <segue destination="8rJ-Kc-sve" kind="relationship" relationship="viewControllers" id="lzU-1b-eKA"/>
+                        <segue destination="9pv-A4-QxB" kind="relationship" relationship="viewControllers" id="u7Y-xg-7CH"/>
                     </connections>
                 </tabBarController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="HuB-VB-40B" sceneMemberID="firstResponder"/>
