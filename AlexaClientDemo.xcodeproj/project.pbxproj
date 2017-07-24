@@ -8,6 +8,16 @@
 
 /* Begin PBXBuildFile section */
 		C01439D81F1C6AED00431566 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C01439D71F1C6AED00431566 /* AudioToolbox.framework */; };
+		C01DF9411F1F5E2600526ECA /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C01DF9401F1F5E2600526ECA /* Security.framework */; };
+		C01DF9431F1F5E3400526ECA /* SafariServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C01DF9421F1F5E3400526ECA /* SafariServices.framework */; };
+		C01DF9451F1F5E5D00526ECA /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C01DF9441F1F5E5D00526ECA /* UIKit.framework */; };
+		C01DF9471F1F5E6700526ECA /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C01DF9461F1F5E6700526ECA /* Foundation.framework */; };
+		C01DF94A1F1F78ED00526ECA /* Settings.swift in Sources */ = {isa = PBXBuildFile; fileRef = C01DF9491F1F78ED00526ECA /* Settings.swift */; };
+		C01DF94C1F1F841600526ECA /* LoginWithAmazonToken.swift in Sources */ = {isa = PBXBuildFile; fileRef = C01DF94B1F1F841600526ECA /* LoginWithAmazonToken.swift */; };
+		C01DF94E1F1F846500526ECA /* LoginWithAmazonProxy.swift in Sources */ = {isa = PBXBuildFile; fileRef = C01DF94D1F1F846500526ECA /* LoginWithAmazonProxy.swift */; };
+		C0469E631F1FD35400DA1C04 /* Accelerate.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C0469E621F1FD35400DA1C04 /* Accelerate.framework */; };
+		C0469E651F1FD36000DA1C04 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C0469E641F1FD36000DA1C04 /* CoreGraphics.framework */; };
+		C0469E671F1FF61700DA1C04 /* LoginWithAmazon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C0469E661F1FF61700DA1C04 /* LoginWithAmazon.framework */; };
 		C06EBEBF1F14B30700540C96 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C06EBEBE1F14B30700540C96 /* AppDelegate.swift */; };
 		C06EBEC11F14B30700540C96 /* FirstViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C06EBEC01F14B30700540C96 /* FirstViewController.swift */; };
 		C06EBEC31F14B30700540C96 /* SecondViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C06EBEC21F14B30700540C96 /* SecondViewController.swift */; };
@@ -19,6 +29,17 @@
 /* Begin PBXFileReference section */
 		C01439D51F1C6AED00431566 /* AlexaClientDemo.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = AlexaClientDemo.entitlements; sourceTree = "<group>"; };
 		C01439D71F1C6AED00431566 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
+		C01DF93E1F1F5B3900526ECA /* LoginWithAmazon.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = LoginWithAmazon.framework; path = "../alexa-swift3-sample-app-master/Frameworks/LoginWithAmazon.framework"; sourceTree = "<group>"; };
+		C01DF9401F1F5E2600526ECA /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
+		C01DF9421F1F5E3400526ECA /* SafariServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SafariServices.framework; path = System/Library/Frameworks/SafariServices.framework; sourceTree = SDKROOT; };
+		C01DF9441F1F5E5D00526ECA /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
+		C01DF9461F1F5E6700526ECA /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		C01DF9491F1F78ED00526ECA /* Settings.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Settings.swift; sourceTree = "<group>"; };
+		C01DF94B1F1F841600526ECA /* LoginWithAmazonToken.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginWithAmazonToken.swift; sourceTree = "<group>"; };
+		C01DF94D1F1F846500526ECA /* LoginWithAmazonProxy.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginWithAmazonProxy.swift; sourceTree = "<group>"; };
+		C0469E621F1FD35400DA1C04 /* Accelerate.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Accelerate.framework; path = System/Library/Frameworks/Accelerate.framework; sourceTree = SDKROOT; };
+		C0469E641F1FD36000DA1C04 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
+		C0469E661F1FF61700DA1C04 /* LoginWithAmazon.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = LoginWithAmazon.framework; path = Frameworks/LoginWithAmazon.framework; sourceTree = "<group>"; };
 		C06EBEBB1F14B30700540C96 /* AlexaClientDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AlexaClientDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C06EBEBE1F14B30700540C96 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		C06EBEC01F14B30700540C96 /* FirstViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirstViewController.swift; sourceTree = "<group>"; };
@@ -34,6 +55,13 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C0469E671F1FF61700DA1C04 /* LoginWithAmazon.framework in Frameworks */,
+				C0469E631F1FD35400DA1C04 /* Accelerate.framework in Frameworks */,
+				C01DF9471F1F5E6700526ECA /* Foundation.framework in Frameworks */,
+				C01DF9451F1F5E5D00526ECA /* UIKit.framework in Frameworks */,
+				C0469E651F1FD36000DA1C04 /* CoreGraphics.framework in Frameworks */,
+				C01DF9431F1F5E3400526ECA /* SafariServices.framework in Frameworks */,
+				C01DF9411F1F5E2600526ECA /* Security.framework in Frameworks */,
 				C01439D81F1C6AED00431566 /* AudioToolbox.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -44,6 +72,14 @@
 		C01439D61F1C6AED00431566 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				C0469E661F1FF61700DA1C04 /* LoginWithAmazon.framework */,
+				C0469E641F1FD36000DA1C04 /* CoreGraphics.framework */,
+				C0469E621F1FD35400DA1C04 /* Accelerate.framework */,
+				C01DF9461F1F5E6700526ECA /* Foundation.framework */,
+				C01DF9441F1F5E5D00526ECA /* UIKit.framework */,
+				C01DF9421F1F5E3400526ECA /* SafariServices.framework */,
+				C01DF9401F1F5E2600526ECA /* Security.framework */,
+				C01DF93E1F1F5B3900526ECA /* LoginWithAmazon.framework */,
 				C01439D71F1C6AED00431566 /* AudioToolbox.framework */,
 			);
 			name = Frameworks;
@@ -74,6 +110,9 @@
 				C06EBEC01F14B30700540C96 /* FirstViewController.swift */,
 				C06EBEC21F14B30700540C96 /* SecondViewController.swift */,
 				C06EBEC41F14B30700540C96 /* Main.storyboard */,
+				C01DF9491F1F78ED00526ECA /* Settings.swift */,
+				C01DF94B1F1F841600526ECA /* LoginWithAmazonToken.swift */,
+				C01DF94D1F1F846500526ECA /* LoginWithAmazonProxy.swift */,
 				C06EBEC71F14B30700540C96 /* Assets.xcassets */,
 				C06EBEC91F14B30700540C96 /* LaunchScreen.storyboard */,
 				C06EBECC1F14B30700540C96 /* Info.plist */,
@@ -161,6 +200,9 @@
 			files = (
 				C06EBEC31F14B30700540C96 /* SecondViewController.swift in Sources */,
 				C06EBEBF1F14B30700540C96 /* AppDelegate.swift in Sources */,
+				C01DF94A1F1F78ED00526ECA /* Settings.swift in Sources */,
+				C01DF94C1F1F841600526ECA /* LoginWithAmazonToken.swift in Sources */,
+				C01DF94E1F1F846500526ECA /* LoginWithAmazonProxy.swift in Sources */,
 				C06EBEC11F14B30700540C96 /* FirstViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -288,12 +330,29 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = AlexaClientDemo/AlexaClientDemo.entitlements;
 				DEVELOPMENT_TEAM = TWZ9P3N7NQ;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/../",
+					"$(PROJECT_DIR)/Frameworks",
+				);
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/../",
+				);
 				INFOPLIST_FILE = AlexaClientDemo/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 10.2;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.example.AlexaClientDemo;
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+					"$(PROJECT_DIR)/",
+					"$(PROJECT_DIR)/../",
+					"$(PROJECT_DIR)/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.AlexaClientDemo;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 3.0;
+				USER_HEADER_SEARCH_PATHS = "$(PROJECT_DIR)";
 			};
 			name = Debug;
 		};
@@ -303,12 +362,29 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = AlexaClientDemo/AlexaClientDemo.entitlements;
 				DEVELOPMENT_TEAM = TWZ9P3N7NQ;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/../",
+					"$(PROJECT_DIR)/Frameworks",
+				);
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/../",
+				);
 				INFOPLIST_FILE = AlexaClientDemo/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 10.2;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.example.AlexaClientDemo;
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+					"$(PROJECT_DIR)/",
+					"$(PROJECT_DIR)/../",
+					"$(PROJECT_DIR)/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.AlexaClientDemo;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 3.0;
+				USER_HEADER_SEARCH_PATHS = "$(PROJECT_DIR)";
 			};
 			name = Release;
 		};

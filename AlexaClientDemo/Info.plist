@@ -2,8 +2,12 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>APIKey</key>
+	<string>eyJhbGciOiJSU0EtU0hBMjU2IiwidmVyIjoiMSJ9.eyJ2ZXIiOiIzIiwiZW5kcG9pbnRzIjp7ImF1dGh6IjoiaHR0cHM6Ly93d3cuYW1hem9uLmNvbS9hcC9vYSIsInRva2VuRXhjaGFuZ2UiOiJodHRwczovL2FwaS5hbWF6b24uY29tL2F1dGgvbzIvdG9rZW4ifSwiY2xpZW50SWQiOiJhbXpuMS5hcHBsaWNhdGlvbi1vYTItY2xpZW50LmJkNmY1NzMwMGE1ZTRlZmFiMTJkYWNmNmE4MWM1OWEzIiwiYXBwRmFtaWx5SWQiOiJhbXpuMS5hcHBsaWNhdGlvbi4yMWIzMDRlY2M0NmU0MjI5OWQwZmFlZWFmMWFmOThiNSIsImJ1bmRsZVNlZWRJZCI6ImNvbS5BbGV4YUNsaWVudERlbW8iLCJidW5kbGVJZCI6ImNvbS5BbGV4YUNsaWVudERlbW8iLCJpc3MiOiJBbWF6b24iLCJ0eXBlIjoiQVBJS2V5IiwiYXBwVmFyaWFudElkIjoiYW16bjEuYXBwbGljYXRpb24tY2xpZW50LmQ5YmFlZTg2YTE2ODRiZGFiMmU3Y2NlNWMzOGQ0MWM3IiwidHJ1c3RQb29sIjpudWxsLCJhcHBJZCI6ImFtem4xLmFwcGxpY2F0aW9uLWNsaWVudC5kOWJhZWU4NmExNjg0YmRhYjJlN2NjZTVjMzhkNDFjNyIsImlkIjoiNDdkNmVmZDItNmNiOC0xMWU3LTgzM2UtM2ZkNzUwODZkZDNiIiwiaWF0IjoiMTUwMDQ5MjQzOTMxNCJ9.JNeYD7mPhEb7iLeVU7Kyp+Rp/OPktMC1OoHNEZGSlWQq2Ee7RIGJjrl58EniAy8B0MH0ENQDMRDHkVex9inRMiuH9SZUMIy2lxqxqXgqu9danRBuyjH5qoYqTqaQc/rGDuEHd/r0WN4EbXXNHRzy7hOtIVAPOdw1USPbl8E02aunICt0wylB2wG2SQX9uJ9sUAa99PV0Mapjmysq5R7sT0u8RtJoKKuQj/dnvftZRatx6EXqKevn3aXvi2Mrc2k4NdW+1QM3/s8tZQR0fnkqq577ZAANoEBHL4GXXGaCURiC3NwyI6ZZ5zXcxhP1nB/GstmDvlDVvCjDMTuRYrIheg==</string>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>en</string>
+	<key>CFBundleDisplayName</key>
+	<string>Alexa Voice Assistant</string>
 	<key>CFBundleExecutable</key>
 	<string>$(EXECUTABLE_NAME)</string>
 	<key>CFBundleIdentifier</key>
@@ -16,10 +20,23 @@
 	<string>APPL</string>
 	<key>CFBundleShortVersionString</key>
 	<string>1.0</string>
+	<key>CFBundleURLTypes</key>
+	<array>
+		<dict>
+			<key>CFBundleURLName</key>
+			<string>com.AlexaClientDemo</string>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>amzn-com.AlexaClientDemo</string>
+			</array>
+		</dict>
+	</array>
 	<key>CFBundleVersion</key>
 	<string>1</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
+	<key>NSMicrophoneUsageDescription</key>
+	<string>The audio recorded by this app is stored securely and is not shared</string>
 	<key>UILaunchStoryboardName</key>
 	<string>LaunchScreen</string>
 	<key>UIMainStoryboardFile</key>
@@ -38,20 +55,14 @@
 			<false/>
 		</dict>
 	</dict>
+	<key>UIRequiresFullScreen</key>
+	<true/>
 	<key>UISupportedInterfaceOrientations</key>
 	<array>
 		<string>UIInterfaceOrientationPortrait</string>
 		<string>UIInterfaceOrientationLandscapeLeft</string>
-		<string>UIInterfaceOrientationLandscapeRight</string>
-	</array>
-	<key>UISupportedInterfaceOrientations~ipad</key>
-	<array>
 		<string>UIInterfaceOrientationPortrait</string>
-		<string>UIInterfaceOrientationPortraitUpsideDown</string>
-		<string>UIInterfaceOrientationLandscapeLeft</string>
 		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
-	<key>NSMicrophoneUsageDescription</key>
-	<string>The audio recorded by this app is stored securely and is not shared</string>
 </dict>
 </plist>
