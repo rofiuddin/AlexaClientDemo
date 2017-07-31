@@ -9,92 +9,102 @@
 import UIKit
 import AVFoundation
 
-class FirstViewController: UIViewController, AVAudioRecorderDelegate {
+class FirstViewController: UIViewController, AVAudioRecorderDelegate, AVAudioPlayerDelegate {
     @IBOutlet weak var recordButton: UIButton!
     @IBOutlet weak var statusText: UILabel!
+    @IBOutlet weak var pingButton: UIButton!
 
-    var audioRecorder:AVAudioRecorder?
-    var audioPlayer:AVAudioPlayer?
+    private let audioSession = AVAudioSession.sharedInstance()
+    private var audioRecorder: AVAudioRecorder!
+    private var audioPlayer: AVAudioPlayer!
+    private var isRecording = false
+    
+    private var avsClient = AlexaVoiceServiceClient()
+    private var speakToken: String?
+
+    private var stopCaptureTimer: Timer!
+    private var isListening = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        // Get the document directory. If fails, just skip the rest of the code
-        guard let directoryURL = FileManager.default.urls(for:
-            FileManager.SearchPathDirectory.documentDirectory, in:
-            FileManager.SearchPathDomainMask.userDomainMask).first else {
-                let alertMessage = UIAlertController(title: "Error", message: "Failed to get the document directory for recording the audio. Please try again later.", preferredStyle: .alert)
-                    alertMessage.addAction(UIAlertAction(title: "OK", style: .default,
-                    handler: nil))
-                    present(alertMessage, animated: true, completion: nil)
-                return
-        }
-        
-        // Setup the default audio file
-        let audioFileURL = directoryURL.appendingPathComponent("MyRecordedAudio.m4a")
-        
-        // Setup the audio session
-        let audioSession = AVAudioSession.sharedInstance()
-        
-        do {
-            try audioSession.setCategory(AVAudioSessionCategoryPlayAndRecord, with: .defaultToSpeaker)
-            
-            // Define the recorder setting
-            let recorderSetting: [String: Any] = [
-                AVFormatIDKey: Int(kAudioFormatMPEG4AAC),
-                AVSampleRateKey: 44100.0,
-                AVNumberOfChannelsKey: 2,
-                AVEncoderAudioQualityKey: AVAudioQuality.high.rawValue
-            ]
-            
-            // Initiate and prepare the recorder
-            audioRecorder = try AVAudioRecorder(url: audioFileURL, settings:
-                recorderSetting)
-            audioRecorder?.delegate = self
-            audioRecorder?.isMeteringEnabled = true
-            audioRecorder?.prepareToRecord()
-            
-        } catch {
-            print(error)
-        }
+        avsClient.pingHandler = self.pingHandler
     }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-
+    
     // MARK: Action methods
     @IBAction func record(_ sender: UIButton) {
-        // Stop the audio player before recording
-        if let player = audioPlayer {
-            if player.isPlaying {
-                player.stop()
+        if (self.isRecording) {
+            audioRecorder.stop()
+            
+            self.isRecording = false
+            statusText.text = "Tap to start recording"
+            recordButton.backgroundColor = UIColor(red: 84/255.0, green: 137/255.0, blue: 255/255.0, alpha: 1)
+            do {
+                try avsClient.postRecording(audioData: Data(contentsOf: audioRecorder.url))
+            } catch let ex {
+                print("AVS Client threw an error: \(ex.localizedDescription)")
+            }
+        } else {
+            prepareAudioSession()
+            
+            audioRecorder.prepareToRecord()
+            audioRecorder.record()
+            
+            self.isRecording = true
+            statusText.text = "Recording...Tap to stop"
+            recordButton.backgroundColor = UIColor.red
+        }
+    }
+    
+    @IBAction func onClickPingBtn(_ sender: Any) {
+        avsClient.ping()
+    }
+    
+    func pingHandler(isSuccess: Bool) {
+        DispatchQueue.main.async { () -> Void in
+            if (isSuccess) {
+                self.statusText.text = "Ping success!"
+            } else {
+                self.statusText.text = "Ping failure!"
             }
         }
-        if let recorder = audioRecorder {
-            if !recorder.isRecording {
-                let audioSession = AVAudioSession.sharedInstance()
+    }
+    
+    func directiveHandler(directives: [DirectiveData]) {
+        // Store the token for directive "Speak"
+        for directive in directives {
+            if (directive.contentType == "application/json") {
                 do {
-                    try audioSession.setActive(true)
-                    // Start recording
-                    recorder.record(forDuration: 20)
-                    // Change the status label
-                    statusText.text = "Recording..."
-                    recordButton.backgroundColor = UIColor.red
-                } catch {
-                    print(error)
-                }
-            } else {
-                // Stop the audio recorder
-                recorder.stop()
-                let audioSession = AVAudioSession.sharedInstance()
-                do {
-                    try audioSession.setActive(false)
-                } catch {
-                    print(error)
+                    let jsonData = try JSONSerialization.jsonObject(with: directive.data) as! [String:Any]
+                    let directiveJson = jsonData["directive"] as! [String:Any]
+                    let header = directiveJson["header"] as! [String:String]
+                    if (header["name"] == "Speak") {
+                        let payload = directiveJson["payload"] as! [String:String]
+                        self.speakToken = payload["token"]!
+                    }
+                } catch let ex {
+                    print("Directive data has an error: \(ex.localizedDescription)")
                 }
             }
+        }
+        
+        print("audio response successfully recieved")
+    }
+    
+    func prepareAudioSession() {
+        
+        do {
+            let directory = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0]
+            let fileURL = directory.appendingPathComponent(Settings.Audio.TEMP_FILE_NAME)
+            try audioRecorder = AVAudioRecorder(url: fileURL, settings: Settings.Audio.RECORDING_SETTING as [String : AnyObject])
+            try audioSession.setCategory(AVAudioSessionCategoryPlayAndRecord, with:[AVAudioSessionCategoryOptions.allowBluetooth, AVAudioSessionCategoryOptions.allowBluetoothA2DP])
+        } catch let ex {
+            print("Audio session has an error: \(ex.localizedDescription)")
         }
     }
     
@@ -102,16 +112,9 @@ class FirstViewController: UIViewController, AVAudioRecorderDelegate {
     func audioRecorderDidFinishRecording(_ recorder: AVAudioRecorder, successfully
         flag: Bool) {
         if flag {
-            // Change the status label
-            statusText.text = "Tap to start recording"
-            recordButton.backgroundColor = UIColor(red: 84/255.0, green: 137/255.0, blue: 255/255.0, alpha: 1)
             
-            let audioSession = AVAudioSession.sharedInstance()
-            do {
-                try audioSession.setActive(false)
-            } catch {
-                print(error)
-            }
+            print("Audio recorder is finished recording")
+            
             let alertMessage = UIAlertController(title: "Finish Recording",
                                                  message: "Successfully recorded the audio!", preferredStyle: .alert)
             alertMessage.addAction(UIAlertAction(title: "OK", style: .default,
@@ -119,5 +122,9 @@ class FirstViewController: UIViewController, AVAudioRecorderDelegate {
             present(alertMessage, animated: true, completion: nil)
         }
     }
+    
+    func audioRecorderEncodeErrorDidOccur(_ recorder: AVAudioRecorder, error: Error?) {
+        print("Audio recorder has an error: \(String(describing: error?.localizedDescription))")
+    }
+    
 }
-
