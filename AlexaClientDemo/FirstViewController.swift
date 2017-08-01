@@ -29,6 +29,8 @@ class FirstViewController: UIViewController, AVAudioRecorderDelegate, AVAudioPla
         super.viewDidLoad()
         
         avsClient.pingHandler = self.pingHandler
+        avsClient.directiveHandler = self.directiveHandler
+        
     }
 
     override func didReceiveMemoryWarning() {
