@@ -161,6 +161,34 @@ class AlexaVoiceServiceClient : NSObject, URLSessionDelegate, URLSessionDataDele
         }).resume()
     }
     
+    func sendEvent(namespace: String, name: String, token: String) {
+        
+        var request = URLRequest(url: URL(string: EVENTS_ENDPOINT)!)
+        request.httpMethod = "POST"
+        addAuthHeader(request: &request)
+        addContentTypeHeader(request: &request)
+        
+        var eventData = EVENT_DATA_TEMPLATE
+        eventData = eventData.replacingOccurrences(of: "$messageId", with: UUID().uuidString)
+        eventData = eventData.replacingOccurrences(of: "$namespace", with: namespace)
+        eventData = eventData.replacingOccurrences(of: "$name", with: name)
+        eventData = eventData.replacingOccurrences(of: "$token", with: token)
+        
+        var bodyData = Data()
+        bodyData.append(getBoundaryTermBegin())
+        bodyData.append(addEventData(jsonData: eventData))
+        bodyData.append(getBoundaryTermEnd())
+        
+        session.uploadTask(with: request, from: bodyData, completionHandler: { (data:Data?, response:URLResponse?, error:Error?) -> Void in
+            if (error != nil) {
+                print("Send event \(namespace).\(name) error: \(String(describing: error?.localizedDescription))")
+            } else {
+                let res = response as! HTTPURLResponse
+                print("Send event \(namespace).\(name) status code: \(res.statusCode)")
+            }
+        }).resume()
+    }
+    
     fileprivate func addAuthHeader(request: inout URLRequest) {
         request.addValue("Bearer \(LoginWithAmazonToken.sharedInstance.loginWithAmazonToken!)", forHTTPHeaderField: "Authorization")
     }

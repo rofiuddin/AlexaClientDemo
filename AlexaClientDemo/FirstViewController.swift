@@ -95,7 +95,25 @@ class FirstViewController: UIViewController, AVAudioRecorderDelegate, AVAudioPla
             }
         }
         
-        print("audio response successfully recieved")
+        // Play the audio
+        for directive in directives {
+            if (directive.contentType == "application/octet-stream") {
+                DispatchQueue.main.async { () -> Void in
+                    self.statusText.text = "Alexa is speaking"
+                }
+                do {
+                    self.avsClient.sendEvent(namespace: "SpeechSynthesizer", name: "SpeechStarted", token: self.speakToken!)
+                    
+                    try audioSession.setCategory(AVAudioSessionCategoryPlayAndRecord, with:[AVAudioSessionCategoryOptions.allowBluetooth, AVAudioSessionCategoryOptions.allowBluetoothA2DP])
+                    try self.audioPlayer = AVAudioPlayer(data: directive.data)
+                    self.audioPlayer.delegate = self
+                    self.audioPlayer.prepareToPlay()
+                    self.audioPlayer.play()
+                } catch let ex {
+                    print("Audio player has an error: \(ex.localizedDescription)")
+                }
+            }
+        }
     }
     
     func prepareAudioSession() {
