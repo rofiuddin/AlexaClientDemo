@@ -29,6 +29,8 @@ class FirstViewController: UIViewController, AVAudioRecorderDelegate, AVAudioPla
         super.viewDidLoad()
         
         avsClient.pingHandler = self.pingHandler
+        avsClient.directiveHandler = self.directiveHandler
+        
     }
 
     override func didReceiveMemoryWarning() {
@@ -93,7 +95,25 @@ class FirstViewController: UIViewController, AVAudioRecorderDelegate, AVAudioPla
             }
         }
         
-        print("audio response successfully recieved")
+        // Play the audio
+        for directive in directives {
+            if (directive.contentType == "application/octet-stream") {
+                DispatchQueue.main.async { () -> Void in
+                    self.statusText.text = "Alexa is speaking"
+                }
+                do {
+                    self.avsClient.sendEvent(namespace: "SpeechSynthesizer", name: "SpeechStarted", token: self.speakToken!)
+                    
+                    try audioSession.setCategory(AVAudioSessionCategoryPlayAndRecord, with:[AVAudioSessionCategoryOptions.allowBluetooth, AVAudioSessionCategoryOptions.allowBluetoothA2DP])
+                    try self.audioPlayer = AVAudioPlayer(data: directive.data)
+                    self.audioPlayer.delegate = self
+                    self.audioPlayer.prepareToPlay()
+                    self.audioPlayer.play()
+                } catch let ex {
+                    print("Audio player has an error: \(ex.localizedDescription)")
+                }
+            }
+        }
     }
     
     func prepareAudioSession() {
@@ -109,18 +129,19 @@ class FirstViewController: UIViewController, AVAudioRecorderDelegate, AVAudioPla
     }
     
     // MARK: Delegate methods
-    func audioRecorderDidFinishRecording(_ recorder: AVAudioRecorder, successfully
-        flag: Bool) {
-        if flag {
-            
-            print("Audio recorder is finished recording")
-            
-            let alertMessage = UIAlertController(title: "Finish Recording",
-                                                 message: "Successfully recorded the audio!", preferredStyle: .alert)
-            alertMessage.addAction(UIAlertAction(title: "OK", style: .default,
-                                                 handler: nil))
-            present(alertMessage, animated: true, completion: nil)
-        }
+    func audioPlayerDidFinishPlaying(_ player: AVAudioPlayer, successfully flag: Bool) {
+        print("Audio player is finished playing")
+        self.statusText.text = "Tap to start recording"
+        
+        self.avsClient.sendEvent(namespace: "SpeechSynthesizer", name: "SpeechFinished", token: self.speakToken!)
+    }
+    
+    func audioPlayerDecodeErrorDidOccur(_ player: AVAudioPlayer, error: Error?) {
+        print("Audio player has an error: \(String(describing: error?.localizedDescription))")
+    }
+    
+    func audioRecorderDidFinishRecording(_ recorder: AVAudioRecorder, successfully flag: Bool) {
+        print("Audio recorder is finished recording")
     }
     
     func audioRecorderEncodeErrorDidOccur(_ recorder: AVAudioRecorder, error: Error?) {

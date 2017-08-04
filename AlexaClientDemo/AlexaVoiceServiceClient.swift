@@ -19,7 +19,7 @@ class AlexaVoiceServiceClient : NSObject, URLSessionDelegate, URLSessionDataDele
     let DIRECTIVES_ENDPOINT = "https://avs-alexa-na.amazon.com/v20160207/directives"
     let EVENTS_ENDPOINT: String = "https://avs-alexa-na.amazon.com/v20160207/events"
     
-    let TIMEOUT = 3600
+    let TIMEOUT = 3600 // 60 minutes per AVS recommendation
     let BOUNDARY_TERM = "CUSTOM_BOUNDARY_TERM"
     let SYNC_EVENT_DATA = "{ \"event\" : { \"header\" : { \"namespace\" : \"System\", \"name\" : \"SynchronizeState\", \"messageId\" : \"1\" }, \"payload\" : { } }, \"context\" : [ { \"header\" : { \"namespace\" : \"AudioPlayer\", \"name\" : \"PlaybackState\" }, \"payload\" : { \"token\" : \"\", \"offsetInMilliseconds\" : 0, \"playerActivity\" : \"IDLE\" } }, { \"header\" : { \"namespace\" : \"SpeechSynthesizer\", \"name\" : \"SpeechState\" }, \"payload\" : { \"token\" : \"\", \"offsetInMilliseconds\" : 0, \"playerActivity\" : \"FINISHED\" } }, { \"header\" : { \"namespace\" : \"Alerts\", \"name\" : \"AlertsState\" }, \"payload\" : { \"allAlerts\" : [ ], \"activeAlerts\" : [ ] } }, { \"header\" : { \"namespace\" : \"Speaker\", \"name\" : \"VolumeState\" }, \"payload\" : { \"volume\" : 50, \"muted\" : false } } ] }"
     let AUDIO_EVENT_DATA = "{\"event\": {\"header\": {\"namespace\": \"SpeechRecognizer\",\"name\": \"Recognize\",\"messageId\": \"$messageId\",\"dialogRequestId\": \"$dialogRequestId\"},\"payload\": {\"profile\": \"NEAR_FIELD\", \"format\": \"AUDIO_L16_RATE_16000_CHANNELS_1\"}},\"context\": [{\"header\": {\"namespace\": \"AudioPlayer\",\"name\": \"PlaybackState\"},\"payload\": {\"token\": \"\",\"offsetInMilliseconds\": 0,\"playerActivity\": \"FINISHED\"}}, {\"header\": {\"namespace\": \"SpeechSynthesizer\",\"name\": \"SpeechState\"},\"payload\": {\"token\": \"\",\"offsetInMilliseconds\": 0,\"playerActivity\": \"FINISHED\"}}, { \"header\" : { \"namespace\" : \"Alerts\", \"name\" : \"AlertsState\" }, \"payload\" : { \"allAlerts\" : [ ], \"activeAlerts\" : [ ] } }, {\"header\": {\"namespace\": \"Speaker\",\"name\": \"VolumeState\"},\"payload\": {\"volume\": 25,\"muted\": false}}]}"
@@ -28,7 +28,9 @@ class AlexaVoiceServiceClient : NSObject, URLSessionDelegate, URLSessionDataDele
     var session: URLSession!
     
     var pingHandler: ((_ isSuccess:Bool) -> Void)?
+    var syncHandler: ((_ isSuccess:Bool) -> Void)?
     var directiveHandler: ((_ directives:[DirectiveData]) -> Void)?
+    var downchannelHandler: ((_ directive:String) -> Void)?
     
     override init() {
         super.init()
@@ -62,6 +64,26 @@ class AlexaVoiceServiceClient : NSObject, URLSessionDelegate, URLSessionDataDele
         }).resume()
     }
     
+    func startDownchannel() {
+        
+        // 1. Establish a downchannel stream
+        var request = URLRequest(url: URL(string: DIRECTIVES_ENDPOINT)!)
+        request.httpMethod = "GET"
+        request.timeoutInterval = TimeInterval(TIMEOUT)
+        addAuthHeader(request: &request)
+        session.dataTask(with: request).resume()
+        
+        // 2. Sychronize states
+        sync(jsonData: SYNC_EVENT_DATA)
+        
+        // 3. Send a Ping every 5 minutes
+        Timer.scheduledTimer(timeInterval: 300,
+                             target: self,
+                             selector: #selector(ping),
+                             userInfo: nil,
+                             repeats: true)
+    }
+    
     func postRecording(audioData: Data) {
         
         var eventData = AUDIO_EVENT_DATA
@@ -70,6 +92,37 @@ class AlexaVoiceServiceClient : NSObject, URLSessionDelegate, URLSessionDataDele
         eventData = eventData.replacingOccurrences(of: "$dialogRequestId", with: UUID().uuidString)
         
         sendAudio(jsonData: eventData, audioData: audioData)
+    }
+    
+    func sync(jsonData: String) {
+        
+        var request = URLRequest(url: URL(string: EVENTS_ENDPOINT)!)
+        request.httpMethod = "POST"
+        request.timeoutInterval = TimeInterval(TIMEOUT)
+        addAuthHeader(request: &request)
+        addContentTypeHeader(request: &request)
+        
+        var bodyData = Data()
+        bodyData.append(getBoundaryTermBegin())
+        bodyData.append(addEventData(jsonData: jsonData))
+        bodyData.append(getBoundaryTermEnd())
+        
+        session.uploadTask(with: request, from: bodyData, completionHandler: { (data:Data?, response:URLResponse?, error:Error?) -> Void in
+            if (error != nil) {
+                print("Send data error: \(String(describing: error?.localizedDescription))")
+                self.syncHandler?(false)
+            } else {
+                let res = response as! HTTPURLResponse
+                print("Sync status code: \(res.statusCode)")
+                if (res.statusCode != 204) {
+                    let resJsonData = try! JSONSerialization.jsonObject(with: data!, options: [])
+                    print("Sync response: \(resJsonData)")
+                    self.syncHandler?(false)
+                } else {
+                    self.syncHandler?(true)
+                }
+            }
+        }).resume()
     }
     
     func sendAudio(jsonData: String, audioData: Data) {
@@ -104,6 +157,34 @@ class AlexaVoiceServiceClient : NSObject, URLSessionDelegate, URLSessionDataDele
                         print("Content type in response is empty")
                     }
                 }
+            }
+        }).resume()
+    }
+    
+    func sendEvent(namespace: String, name: String, token: String) {
+        
+        var request = URLRequest(url: URL(string: EVENTS_ENDPOINT)!)
+        request.httpMethod = "POST"
+        addAuthHeader(request: &request)
+        addContentTypeHeader(request: &request)
+        
+        var eventData = EVENT_DATA_TEMPLATE
+        eventData = eventData.replacingOccurrences(of: "$messageId", with: UUID().uuidString)
+        eventData = eventData.replacingOccurrences(of: "$namespace", with: namespace)
+        eventData = eventData.replacingOccurrences(of: "$name", with: name)
+        eventData = eventData.replacingOccurrences(of: "$token", with: token)
+        
+        var bodyData = Data()
+        bodyData.append(getBoundaryTermBegin())
+        bodyData.append(addEventData(jsonData: eventData))
+        bodyData.append(getBoundaryTermEnd())
+        
+        session.uploadTask(with: request, from: bodyData, completionHandler: { (data:Data?, response:URLResponse?, error:Error?) -> Void in
+            if (error != nil) {
+                print("Send event \(namespace).\(name) error: \(String(describing: error?.localizedDescription))")
+            } else {
+                let res = response as! HTTPURLResponse
+                print("Send event \(namespace).\(name) status code: \(res.statusCode)")
             }
         }).resume()
     }
@@ -198,4 +279,12 @@ class AlexaVoiceServiceClient : NSObject, URLSessionDelegate, URLSessionDataDele
         return directives
     }
     
+    // Downchannel directives are processed here
+    func urlSession(_ session: URLSession, dataTask: URLSessionDataTask, didReceive data: Data) {
+        let dataString = String(data: data, encoding: String.Encoding.utf8) ?? "Downchannel directives data is not String"
+        let firstBracket = dataString.range(of: "{")!
+        let lastBracket = dataString.range(of: "}", options: .backwards)!
+        let jsonString = dataString[firstBracket.lowerBound...lastBracket.upperBound]
+        self.downchannelHandler?(jsonString)
+    }
 }

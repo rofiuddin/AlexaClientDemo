@@ -22,34 +22,11 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" text="Alexa Voice Assistant" textAlignment="center" lineBreakMode="tailTruncation" minimumFontSize="10" translatesAutoresizingMaskIntoConstraints="NO" id="KQZ-1w-vlD">
-                                <rect key="frame" x="15" y="325" width="343" height="42"/>
-                                <color key="backgroundColor" red="0.32998142619999998" green="0.53725490200000003" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                <fontDescription key="fontDescription" name="Helvetica" family="Helvetica" pointSize="36"/>
-                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Tap to start recording" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="A5M-7J-77L">
-                                <rect key="frame" x="117" y="375" width="140" height="17"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="r6H-Uk-bu3">
-                                <rect key="frame" x="166" y="408" width="43" height="25"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="43" id="Z2b-JX-f6K"/>
-                                </constraints>
-                                <state key="normal" image="microphone">
-                                    <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                </state>
-                                <connections>
-                                    <action selector="record:" destination="9pv-A4-QxB" eventType="touchUpInside" id="Ezm-g3-e3Y"/>
-                                </connections>
-                            </button>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="R6f-FL-pd5">
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="R6f-FL-pd5">
                                 <rect key="frame" x="164" y="460" width="46" height="30"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="46" id="3Ys-im-l0G"/>
+                                </constraints>
                                 <state key="normal" title="Ping">
                                     <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 </state>
@@ -57,15 +34,46 @@
                                     <action selector="onClickPingBtn:" destination="9pv-A4-QxB" eventType="touchUpInside" id="rQ2-XZ-N9V"/>
                                 </connections>
                             </button>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" spacing="12" translatesAutoresizingMaskIntoConstraints="NO" id="hcD-Yt-slL">
+                                <rect key="frame" x="16" y="237" width="342.5" height="107.5"/>
+                                <subviews>
+                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" text="Alexa Voice Assistant" textAlignment="center" lineBreakMode="tailTruncation" minimumFontSize="10" translatesAutoresizingMaskIntoConstraints="NO" id="KQZ-1w-vlD">
+                                        <rect key="frame" x="0.0" y="0.0" width="342.5" height="41.5"/>
+                                        <color key="backgroundColor" red="0.32998142619999998" green="0.53725490200000003" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <fontDescription key="fontDescription" name="Helvetica" family="Helvetica" pointSize="36"/>
+                                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Tap to start recording" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="A5M-7J-77L">
+                                        <rect key="frame" x="101.5" y="53.5" width="140" height="17"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="r6H-Uk-bu3">
+                                        <rect key="frame" x="150" y="82.5" width="43" height="25"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="43" id="PVK-UA-Cg1"/>
+                                        </constraints>
+                                        <state key="normal" image="microphone">
+                                            <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="record:" destination="9pv-A4-QxB" eventType="touchUpInside" id="Ezm-g3-e3Y"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                            </stackView>
                         </subviews>
                         <color key="backgroundColor" red="0.32998142616421572" green="0.53725490196078429" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
-                            <constraint firstItem="A5M-7J-77L" firstAttribute="top" secondItem="KQZ-1w-vlD" secondAttribute="bottom" constant="8" symbolic="YES" id="2F1-ix-RKN"/>
-                            <constraint firstItem="KQZ-1w-vlD" firstAttribute="leading" secondItem="tsR-hK-woN" secondAttribute="leadingMargin" constant="-1" id="6yd-oc-li4"/>
-                            <constraint firstItem="r6H-Uk-bu3" firstAttribute="top" secondItem="A5M-7J-77L" secondAttribute="bottom" constant="16" id="D1E-bV-aE8"/>
-                            <constraint firstItem="4ug-Mw-9AY" firstAttribute="top" secondItem="r6H-Uk-bu3" secondAttribute="bottom" constant="185" id="H5b-dh-t4Y"/>
-                            <constraint firstItem="KQZ-1w-vlD" firstAttribute="centerX" secondItem="A5M-7J-77L" secondAttribute="centerX" id="Rl4-BW-jG5"/>
-                            <constraint firstItem="r6H-Uk-bu3" firstAttribute="centerX" secondItem="tsR-hK-woN" secondAttribute="centerX" id="uwH-9x-dtO"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="hcD-Yt-slL" secondAttribute="trailing" id="1vM-e5-mcc"/>
+                            <constraint firstItem="hcD-Yt-slL" firstAttribute="top" secondItem="Ia1-K6-d13" secondAttribute="bottom" constant="217" id="7e6-sj-dZ5"/>
+                            <constraint firstItem="hcD-Yt-slL" firstAttribute="leading" secondItem="tsR-hK-woN" secondAttribute="leadingMargin" id="D4A-Ff-VN4"/>
+                            <constraint firstItem="4ug-Mw-9AY" firstAttribute="top" secondItem="R6f-FL-pd5" secondAttribute="bottom" constant="128" id="ZCQ-fG-UV9"/>
+                            <constraint firstItem="hcD-Yt-slL" firstAttribute="centerX" secondItem="R6f-FL-pd5" secondAttribute="centerX" id="ecl-mn-qPY"/>
+                            <constraint firstItem="hcD-Yt-slL" firstAttribute="leading" secondItem="tsR-hK-woN" secondAttribute="leadingMargin" id="gf7-BI-Oe7"/>
+                            <constraint firstItem="hcD-Yt-slL" firstAttribute="top" secondItem="Ia1-K6-d13" secondAttribute="bottom" constant="217" id="kZJ-N2-hzI"/>
                         </constraints>
                     </view>
                     <tabBarItem key="tabBarItem" title="Second" image="second" id="acW-dT-cKf"/>
