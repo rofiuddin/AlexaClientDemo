@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		C01439D81F1C6AED00431566 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C01439D71F1C6AED00431566 /* AudioToolbox.framework */; };
 		C01DF9411F1F5E2600526ECA /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C01DF9401F1F5E2600526ECA /* Security.framework */; };
 		C01DF9431F1F5E3400526ECA /* SafariServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C01DF9421F1F5E3400526ECA /* SafariServices.framework */; };
 		C01DF9451F1F5E5D00526ECA /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C01DF9441F1F5E5D00526ECA /* UIKit.framework */; };
@@ -28,8 +27,6 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		C01439D51F1C6AED00431566 /* AlexaClientDemo.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = AlexaClientDemo.entitlements; sourceTree = "<group>"; };
-		C01439D71F1C6AED00431566 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
 		C01DF93E1F1F5B3900526ECA /* LoginWithAmazon.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = LoginWithAmazon.framework; path = "../alexa-swift3-sample-app-master/Frameworks/LoginWithAmazon.framework"; sourceTree = "<group>"; };
 		C01DF9401F1F5E2600526ECA /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
 		C01DF9421F1F5E3400526ECA /* SafariServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SafariServices.framework; path = System/Library/Frameworks/SafariServices.framework; sourceTree = SDKROOT; };
@@ -57,14 +54,13 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				C0469E671F1FF61700DA1C04 /* LoginWithAmazon.framework in Frameworks */,
 				C0469E631F1FD35400DA1C04 /* Accelerate.framework in Frameworks */,
+				C0469E671F1FF61700DA1C04 /* LoginWithAmazon.framework in Frameworks */,
 				C01DF9471F1F5E6700526ECA /* Foundation.framework in Frameworks */,
 				C01DF9451F1F5E5D00526ECA /* UIKit.framework in Frameworks */,
 				C0469E651F1FD36000DA1C04 /* CoreGraphics.framework in Frameworks */,
 				C01DF9431F1F5E3400526ECA /* SafariServices.framework in Frameworks */,
 				C01DF9411F1F5E2600526ECA /* Security.framework in Frameworks */,
-				C01439D81F1C6AED00431566 /* AudioToolbox.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -82,7 +78,6 @@
 				C01DF9421F1F5E3400526ECA /* SafariServices.framework */,
 				C01DF9401F1F5E2600526ECA /* Security.framework */,
 				C01DF93E1F1F5B3900526ECA /* LoginWithAmazon.framework */,
-				C01439D71F1C6AED00431566 /* AudioToolbox.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -107,7 +102,6 @@
 		C06EBEBD1F14B30700540C96 /* AlexaClientDemo */ = {
 			isa = PBXGroup;
 			children = (
-				C01439D51F1C6AED00431566 /* AlexaClientDemo.entitlements */,
 				C06EBEBE1F14B30700540C96 /* AppDelegate.swift */,
 				C06EBEC01F14B30700540C96 /* FirstViewController.swift */,
 				C06C683A1F29E0D4004D97F3 /* AlexaVoiceServiceClient.swift */,
@@ -159,7 +153,7 @@
 						ProvisioningStyle = Automatic;
 						SystemCapabilities = {
 							com.apple.InterAppAudio = {
-								enabled = 1;
+								enabled = 0;
 							};
 						};
 					};
@@ -332,7 +326,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_ENTITLEMENTS = AlexaClientDemo/AlexaClientDemo.entitlements;
 				DEVELOPMENT_TEAM = TWZ9P3N7NQ;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -364,7 +357,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_ENTITLEMENTS = AlexaClientDemo/AlexaClientDemo.entitlements;
 				DEVELOPMENT_TEAM = TWZ9P3N7NQ;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",

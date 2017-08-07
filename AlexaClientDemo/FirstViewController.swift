@@ -9,7 +9,7 @@
 import UIKit
 import AVFoundation
 
-class FirstViewController: UIViewController, AVAudioRecorderDelegate, AVAudioPlayerDelegate {
+class FirstViewController: UIViewController, AVAudioPlayerDelegate, AVAudioRecorderDelegate {
     @IBOutlet weak var recordButton: UIButton!
     @IBOutlet weak var statusText: UILabel!
     @IBOutlet weak var pingButton: UIButton!
@@ -29,7 +29,9 @@ class FirstViewController: UIViewController, AVAudioRecorderDelegate, AVAudioPla
         super.viewDidLoad()
         
         avsClient.pingHandler = self.pingHandler
+        avsClient.syncHandler = self.syncHandler
         avsClient.directiveHandler = self.directiveHandler
+        avsClient.downchannelHandler = self.downchannelHandler
         
     }
 
@@ -64,7 +66,7 @@ class FirstViewController: UIViewController, AVAudioRecorderDelegate, AVAudioPla
     }
     
     @IBAction func onClickPingBtn(_ sender: Any) {
-        avsClient.ping()
+        avsClient.startDownchannel()
     }
     
     func pingHandler(isSuccess: Bool) {
@@ -73,6 +75,16 @@ class FirstViewController: UIViewController, AVAudioRecorderDelegate, AVAudioPla
                 self.statusText.text = "Ping success!"
             } else {
                 self.statusText.text = "Ping failure!"
+            }
+        }
+    }
+    
+    func syncHandler(isSuccess: Bool) {
+        DispatchQueue.main.async { () -> Void in
+            if (isSuccess) {
+                self.statusText.text = "Sync success!"
+            } else {
+                self.statusText.text = "Sync failure!"
             }
         }
     }
@@ -113,6 +125,47 @@ class FirstViewController: UIViewController, AVAudioRecorderDelegate, AVAudioPla
                     print("Audio player has an error: \(ex.localizedDescription)")
                 }
             }
+        }
+    }
+    
+    func downchannelHandler(directive: String) {
+        
+        do {
+            let jsonData = try JSONSerialization.jsonObject(with: directive.data(using: String.Encoding.utf8)!) as! [String:Any]
+            let directiveJson = jsonData["directive"] as! [String:Any]
+            let header = directiveJson["header"] as! [String:String]
+            if (header["name"] == "StopCapture") {
+                // Handle StopCapture
+            } else if (header["name"] == "SetAlert") {
+                // Handle SetAlert
+                let payload = directiveJson["payload"] as! [String:String]
+                let scheduledTime = payload["scheduledTime"]
+                let dateFormatter = DateFormatter()
+                dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ssZ"
+                dateFormatter.locale = Locale.init(identifier: "en_US")
+                let futureDate = dateFormatter.date(from: scheduledTime!)
+                
+                let numberOfSecondsDiff = Calendar.current.dateComponents([.second], from: Date(), to: futureDate!).second ?? 0
+                
+                DispatchQueue.main.async { () -> Void in
+                    Timer.scheduledTimer(timeInterval: TimeInterval(numberOfSecondsDiff),
+                                         target: self,
+                                         selector: #selector(self.timerStart),
+                                         userInfo: nil,
+                                         repeats: false)
+                }
+                
+                print("Downchannel SetAlert scheduledTime: \(scheduledTime!); \(numberOfSecondsDiff) seconds from now.")
+            }
+        } catch let ex {
+            print("Downchannel error: \(ex.localizedDescription)")
+        }
+    }
+    
+    func timerStart() {
+        print("Timer is triggered")
+        DispatchQueue.main.async { () -> Void in
+            self.statusText.text = "Time is up!"
         }
     }
     
